@@ -1,0 +1,26 @@
+---
+- name: DBserver setup
+  hosts: dbservers
+  become: yes
+  tasks:
+    - name: Install MySQL server
+      ansible.builtin.yum:
+        name: mysql-server
+        state: present
+
+    - name: Start MySQL service
+      ansible.builtin.service:
+        name: mysqld
+        state: started
+        enabled: yes
+
+    - name: Install PyMySQL Python package
+      ansible.builtin.yum:
+        name: python3-PyMySQL
+        state: present
+
+    - name: Create database
+      ansible.builtin.mysql_db:
+        name: account
+        state: present
+

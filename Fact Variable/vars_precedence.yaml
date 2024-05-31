@@ -1,0 +1,19 @@
+---
+- name: Understanding Vars
+  hosts: all
+  become: yes
+  gather_facts: FALSE
+  vars:
+    USRNM: playuser
+    COMM: variable from the playbook
+  tasks:
+    - name: create user
+      ansible.builtin.user:
+        name: "{{USRNM}}"
+        comment: "{{COMM}}"
+      register: usrout
+
+    - debug:
+        var: usrout.name
+    - debug:
+        var: usrout.comment
